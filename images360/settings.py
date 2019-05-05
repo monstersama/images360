@@ -34,7 +34,7 @@ IMAGES_STORE = './images'
 ITEM_PIPELINES = {
     'images360.pipelines.ImagePipeline': 300,
     'images360.pipelines.MongoPipeline': 301,
-    'images360.pipelines.MysqlPipeline': 302,
+    # 'images360.pipelines.MysqlPipeline': 302,
 }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

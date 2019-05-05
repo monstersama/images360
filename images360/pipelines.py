@@ -6,12 +6,11 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 
-class Images360Pipeline(object):
-    def process_item(self, item, spider):
-        return item
-
-
 import pymongo
+from scrapy.pipelines.images import ImagesPipeline
+from scrapy import Request
+from scrapy.exceptions import DropItem
+import pymysql
 
 
 class MongoPipeline(object):
@@ -42,52 +41,44 @@ class MongoPipeline(object):
         self.client.close()
 
 
-import pymysql
-
-
-class MysqlPipeline():
-    def __init__(self, host, database, user, password, port):
-        self.host = host
-        self.database = database
-        self.user = user
-        self.password = password
-        self.port = port
-
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        return cls(
-            host=crawler.settings.get('MYSQL_HOST'),
-            database=crawler.settings.get('MYSQL_DATABASE'),
-            user=crawler.settings.get('MYSQL_USER'),
-            password=crawler.settings.get('MYSQL_PASSWORD'),
-            port=crawler.settings.get('MYSQL_PORT'),
-        )
-
-
-    def open_spider(self, spider):
-        self.db = pymysql.connect(self.host, self.user, self.password,
-                                  self.database, self.port, charset='utf-8')
-        self.cursor = self.db.cursor()
-
-
-    def process_item(self, item, spider):
-        data = dict(item)
-        keys = ', '.join(data.keys())
-        values = ', '.join(['%s'] * len(data))
-        sql = 'INSERT into %s (%s) values (%s)' %(item.table, keys, values)
-        self.cursor.execute(sql, tuple(data.values()))
-        self.db.commit()
-        return item
-
-
-    def close_spider(self, spider):
-        self.db.close()
-
-
-from scrapy.pipelines.images import ImagesPipeline
-from scrapy import Request
-from scrapy.exceptions import DropItem
+# class MysqlPipeline():
+#     def __init__(self, host, database, user, password, port):
+#         self.host = host
+#         self.database = database
+#         self.user = user
+#         self.password = password
+#         self.port = port
+#
+#
+#     @classmethod
+#     def from_crawler(cls, crawler):
+#         return cls(
+#             host=crawler.settings.get('MYSQL_HOST'),
+#             database=crawler.settings.get('MYSQL_DATABASE'),
+#             user=crawler.settings.get('MYSQL_USER'),
+#             password=crawler.settings.get('MYSQL_PASSWORD'),
+#             port=crawler.settings.get('MYSQL_PORT'),
+#         )
+#
+#
+#     def open_spider(self, spider):
+#         self.db = pymysql.connect(self.host, self.user, self.password,
+#                                   self.database, self.port, charset='utf-8')
+#         self.cursor = self.db.cursor()
+#
+#
+#     def process_item(self, item, spider):
+#         data = dict(item)
+#         keys = ', '.join(data.keys())
+#         values = ', '.join(['%s'] * len(data))
+#         sql = 'INSERT into %s (%s) values (%s)' %(item.table, keys, values)
+#         self.cursor.execute(sql, tuple(data.values()))
+#         self.db.commit()
+#         return item
+#
+#
+#     def close_spider(self, spider):
+#         self.db.close()
 
 
 class ImagePipeline(ImagesPipeline):

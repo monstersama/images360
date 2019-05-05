@@ -3,12 +3,12 @@ from urllib.parse import urlencode
 import scrapy
 from scrapy import Spider, Request
 from images360.items import ImageItem
+import json
 
 
 class ImagesSpider(scrapy.Spider):
     name = 'images'
     allowed_domains = ['images.so.com']
-    start_urls = ['http://images.so.com/']
 
 
     def start_requests(self):
@@ -27,5 +27,6 @@ class ImagesSpider(scrapy.Spider):
             item = ImageItem()
             item['id'] = image.get('imageid')
             item['url'] = image.get('qhimg_url')
+            item['title'] = image.get('group_title')
             item['thumb'] = image.get('qhimg_thumb_url')
             yield item

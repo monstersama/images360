@@ -8,10 +8,6 @@
 import scrapy
 from scrapy import Item, Field
 
-class Images360Item(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
 
 class ImageItem(Item):
     collection = table = 'images'
