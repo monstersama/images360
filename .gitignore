@@ -1,5 +1,5 @@
 #忽略图片
-/imgs/*
+images/*
 .idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
