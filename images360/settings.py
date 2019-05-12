@@ -15,7 +15,7 @@ SPIDER_MODULES = ['images360.spiders']
 NEWSPIDER_MODULE = 'images360.spiders'
 
 # 爬取的最大页数
-MAX_PAGE = 50
+MAX_PAGE = 1
 
 # MONGODB
 MONGO_URI = 'localhost'
@@ -24,7 +24,7 @@ MONGO_DB = 'images360'
 # MYSQL
 MYSQL_HOST = 'localhost'
 MYSQL_DATABASE = 'images360'
-MYSQL_PORT = '3306'
+MYSQL_PORT = 3306
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = '123456'
 
@@ -34,7 +34,7 @@ IMAGES_STORE = './images'
 ITEM_PIPELINES = {
     'images360.pipelines.ImagePipeline': 300,
     'images360.pipelines.MongoPipeline': 301,
-    # 'images360.pipelines.MysqlPipeline': 302,
+    'images360.pipelines.MysqlPipeline': 302,
 }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
